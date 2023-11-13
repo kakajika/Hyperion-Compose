@@ -1,0 +1,3 @@
+[submodule "radiography"]
+	path = radiography
+	url = git@github.com:bu-kajiwara/radiography.git
