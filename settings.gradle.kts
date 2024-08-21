@@ -17,3 +17,4 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "Hyperion-Compose"
 include(":sample")
 include(":hyperion-compose-plugin")
+include(":hyperion-measurement-compose")
