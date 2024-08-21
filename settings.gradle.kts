@@ -13,6 +13,7 @@ dependencyResolutionManagement {
     }
 }
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "Hyperion-Compose"
 include(":sample")
-include(":hyperion-compose")
+include(":hyperion-compose-plugin")

@@ -2,11 +2,10 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.kotlinAndroid)
-    alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "com.github.kakajika.hyperion_compose"
+    namespace = "com.github.kakajika.hyperion_compose_plugin"
     compileSdk = 34
 
     defaultConfig {
@@ -14,6 +13,12 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+    }
+
+    sourceSets {
+        named("main") {
+            java.srcDirs("${rootDir}/radiography/radiography/src/main/java")
+        }
     }
 
     buildTypes {
@@ -46,10 +51,11 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
     implementation(libs.activity.compose)
+    implementation(libs.timber)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
     debugImplementation(libs.ui.test.junit4)
 
-    ksp(libs.auto.service.ksp)
     implementation(libs.hyperion.plugin)
+    implementation(libs.curtains)
 }
