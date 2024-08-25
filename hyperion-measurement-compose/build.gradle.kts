@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.github.kakajika.hyperion_compose"
+    namespace = "com.github.kakajika.hyperion_measurement_compose"
     compileSdk = 34
 
     defaultConfig {
@@ -46,10 +46,12 @@ dependencies {
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
     implementation(libs.activity.compose)
+    implementation(libs.timber)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
     debugImplementation(libs.ui.test.junit4)
 
     ksp(libs.auto.service.ksp)
     implementation(libs.hyperion.plugin)
+    debugImplementation(projects.hyperionComposePlugin)
 }
