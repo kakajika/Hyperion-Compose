@@ -53,5 +53,5 @@ dependencies {
 
     ksp(libs.auto.service.ksp)
     implementation(libs.hyperion.plugin)
-    debugImplementation(projects.hyperionComposePlugin)
+    implementation(projects.hyperionComposePlugin)
 }
