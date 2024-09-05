@@ -72,27 +72,23 @@ class ComposeMeasurementHelperImpl(
     }
 
     override fun hitTest(x: Float, y: Float): View {
-        return findTarget(container, Offset(x, y))
+        return findTarget(container, Offset(x, y)) ?: container
     }
 
-    private fun findTarget(view: View, touchPoint: Offset): View {
+    private fun findTarget(view: View, touchPoint: Offset, skipRoot: Boolean = false): View? {
         // we consider the "best target" to be the view width the smallest width / height
         // whose location on screen is within the given touch area.
-        var bestTarget: View = view
+        var bestTarget: View? = if (skipRoot) null else view
         view.children.forEach { child ->
-            if (!child.isVisible()) return@forEach
-            if (child is ScannableView.ComposeView && child.isSubcomposition) {
-                child.children.forEach {
-                    val target = findTarget(it, touchPoint)
-                    if (target.width <= bestTarget.width &&
-                        target.height <= bestTarget.height) {
-                        bestTarget = target
-                    }
-                }
-            } else if (getContentRootLocation(child).contains(touchPoint)) {
-                val target = findTarget(child, touchPoint)
-                if (target.width <= bestTarget.width &&
-                    target.height <= bestTarget.height) {
+            val isSubcomposition = child is ScannableView.ComposeView && child.isSubcomposition
+            if (!child.isVisible() && !isSubcomposition) return@forEach
+            if (isSubcomposition || getContentRootLocation(child).contains(touchPoint)) {
+                val target = findTarget(child, touchPoint, skipRoot = isSubcomposition)
+                if (bestTarget == null) {
+                    bestTarget = target
+                } else if (target != null &&
+                    target.width <= bestTarget!!.width &&
+                    target.height <= bestTarget!!.height) {
                     bestTarget = target
                 }
             }
@@ -103,6 +99,6 @@ class ComposeMeasurementHelperImpl(
 
 fun View.isVisible() = when (this) {
     is ScannableView.AndroidView -> view.isVisible
-    is ScannableView.ComposeView -> true
+    is ScannableView.ComposeView -> !bounds.isEmpty
     else -> false
 }

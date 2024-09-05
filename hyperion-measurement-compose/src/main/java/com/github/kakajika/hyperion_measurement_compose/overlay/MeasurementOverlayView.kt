@@ -351,30 +351,6 @@ internal class MeasurementOverlayView(context: Context) : FrameLayout(context) {
         return super.onTouchEvent(event)
     }
 
-    private fun findTarget(root: View, x: Float, y: Float): View {
-        // we consider the "best target" to be the view width the smallest width / height
-        // whose location on screen is within the given touch area.
-        var bestTarget = root
-        for (child in root.children) {
-            measurementHelper.getContentRootLocation(child, outRect)
-            if (child is ScannableView.AndroidView && child.view.visibility != VISIBLE) {
-                continue
-            }
-            if (child is ScannableView.ComposeView && child.isSubcomposition) {
-                child.children.forEach { v ->
-                    findTarget(v, x, y)
-                }
-            }
-            if (outRect.contains(x.toInt(), y.toInt())) {
-                val target = findTarget(child, x, y)
-                if (target.width <= bestTarget.width && target.height <= bestTarget.height) {
-                    bestTarget = target
-                }
-            }
-        }
-        return bestTarget
-    }
-
     private fun setPrimaryTarget(view: View) {
         currentView = view
         rectPrimary = Rect()
