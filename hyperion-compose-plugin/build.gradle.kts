@@ -52,9 +52,9 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.activity.compose)
     implementation(libs.timber)
-    debugImplementation(libs.ui.tooling)
-    debugImplementation(libs.ui.test.manifest)
-    debugImplementation(libs.ui.test.junit4)
+    implementation(libs.ui.tooling)
+    implementation(libs.ui.test.manifest)
+    implementation(libs.ui.test.junit4)
 
     implementation(libs.hyperion.plugin)
     implementation(libs.curtains)
